@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  slothsort-engine:
+    image: slothsort/agent:v2.0
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - MODEL=llama3.2:3b
+    volumes:
+      - ./inbox:/app/messy_inbox
+      - ./vault:/app/organized_vault

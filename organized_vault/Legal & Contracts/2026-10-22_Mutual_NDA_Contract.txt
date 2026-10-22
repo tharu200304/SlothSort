@@ -1,0 +1,6 @@
+Title: Efficient Attention Mechanisms for On-Device SLMs
+Abstract: We propose an optimized sparse KV-cache pruning technique for 3B parameter models.
+Methodology: Evaluated against standard benchmarks on commodity laptops.
+DOI: 10.48550/arXiv.2610.12901
+References:
+[1] Vaswani et al., Attention is All You Need, 2017.

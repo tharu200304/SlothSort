@@ -1,0 +1,5 @@
+PATIENT CLINICAL SUMMARY
+Date of Visit: 2026-10-18
+Physician: Dr. H. Vance
+Panel: Comprehensive Metabolic Profile
+All markers within normal physiological ranges. Vitamin D: 45 ng/mL.

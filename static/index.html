@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SlothSort 🦥 | Autonomous Local AI File Tidier</title>
+  <meta name="description" content="Channel your inner sloth. Automate file clutter with open-weight local AI. 100% offline, zero cloud API fees, complete privacy.">
+  
+  <!-- Modern Typography: Outfit (UI) & JetBrains Mono (Code/Files) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/style.css?v=folder2">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon" title="SlothSort Local File Tidier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 7C3 5.89543 3.89543 5 5 5H9.58579C10.1162 5 10.6249 5.21071 11 5.58579L12.4142 7H19C20.1046 7 21 7.89543 21 9V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7Z" fill="url(#brandFolderGrad)" stroke="#fbbf24" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M3 10.5H21" stroke="#fef08a" stroke-width="1.2" stroke-opacity="0.45"/>
+            <defs>
+              <linearGradient id="brandFolderGrad" x1="3" y1="5" x2="21" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#fbbf24" stop-opacity="0.95"/>
+                <stop stop-color="#f59e0b" stop-opacity="0.95"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1>SlothSort <span class="brand-badge">Local AI</span></h1>
+          <p>Autonomous File & Download Tidier • Built with Open-Weight Models</p>
+        </div>
+      </div>
+
+      <!-- Controls & Status Cluster -->
+      <div class="status-cluster">
+        
+        <!-- Folder Preset Selector -->
+        <div class="folder-selector-wrap" title="Switch between demo sandbox and your real Downloads folder">
+          <span class="selector-label">Target:</span>
+          <select id="presetSelect" class="styled-select">
+            <option value="demo">Demo Sandbox (./messy_inbox)</option>
+            <option value="downloads">My Downloads (~/Downloads)</option>
+            <option value="custom" id="customOptionItem" style="display: none;">Custom Folder</option>
+            <option value="add_custom">➕ Add Any Folder...</option>
+          </select>
+        </div>
+
+        <!-- Model Selector -->
+        <div class="model-selector-wrap" title="Select local open-weight model">
+          <span class="selector-label">Model:</span>
+          <select id="modelSelect" class="styled-select">
+            <option value="llama3.2:3b">Llama 3.2 3B</option>
+            <option value="qwen2.5:3b">Qwen 2.5 3B</option>
+            <option value="phi3:mini">Phi-3.5 Mini</option>
+            <option value="mistral:7b">Mistral 7B</option>
+          </select>
+        </div>
+
+        <!-- Engine Status Badge -->
+        <div class="pill-badge" id="aiStatusBadge">
+          <span class="status-indicator indicator-green" id="aiStatusDot"></span>
+          <span id="aiStatusText">Connecting...</span>
+        </div>
+
+        <!-- How it works toggle -->
+        <button class="btn btn-secondary btn-sm" id="btnToggleGuide" title="Learn how local AI organizes your files safely">
+          <span>❓</span>
+          <span>How It Works</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Collapsible "How It Works" Visual Explainer (Hidden by default) -->
+    <section class="guide-banner" id="guideBanner" style="display: none;">
+      <div class="guide-header">
+        <div class="guide-title">
+          <span>💡</span>
+          <strong>How SlothSort Safely Automates Your File Organization</strong>
+        </div>
+        <button class="btn-icon" id="btnCloseGuide">&times;</button>
+      </div>
+      <div class="guide-steps">
+        <div class="guide-step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon">🔍</div>
+          <div class="step-content">
+            <h4>Safe 2KB Snippet Scan</h4>
+            <p>Reads only document headers and text snippets locally. Zero cloud API calls.</p>
+          </div>
+        </div>
+        <div class="guide-step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon">🧠</div>
+          <div class="step-content">
+            <h4>Local Neural Reasoning</h4>
+            <p>Analyzes intent, generates clean date-stamped filenames, and categorizes automatically.</p>
+          </div>
+        </div>
+        <div class="guide-step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon">🛡️</div>
+          <div class="step-content">
+            <h4>Reversible Safe Move</h4>
+            <p>Moves into organized vaults with collision prevention and 1-click reversible undo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consolidated Sleek Top Control & Metrics Bar -->
+    <section class="top-control-bar">
+      <div class="top-bar-actions">
+        <button id="btnSort" class="btn btn-primary btn-sm" title="Sort all files in inbox right now">
+          <span>⚡</span>
+          <span>Sort Now</span>
+        </button>
+        <button id="btnPreview" class="btn btn-secondary btn-sm" title="Preview categories and names without moving files">
+          <span>👁️</span>
+          <span>Dry Run</span>
+        </button>
+        <button id="btnUndo" class="btn btn-undo btn-sm" title="Reverse previous sorting batch" disabled>
+          <span>↩</span>
+          <span>Undo</span>
+        </button>
+        <button id="btnSeed" class="btn btn-amber btn-sm" title="Generate realistic messy clutter files in inbox">
+          <span>🎲</span>
+          <span>Seed Demo</span>
+        </button>
+      </div>
+
+      <div class="top-bar-metrics">
+        <div class="top-metric-chip" title="Messy Inbox files waiting for cleanup">
+          <span class="top-metric-label">Inbox:</span>
+          <span class="top-metric-val" id="metricInboxCount">0</span>
+          <span id="metricInboxDesc" style="display: none;"></span>
+        </div>
+        <div class="top-metric-chip" title="Categorized files in safe vaults">
+          <span class="top-metric-label">Vault:</span>
+          <span class="top-metric-val val-green" id="metricVaultCount">0</span>
+        </div>
+        <div class="top-metric-chip" title="Active local neural model">
+          <span class="top-metric-label">Engine:</span>
+          <span class="top-metric-val val-cyan" id="metricEngine">Loading...</span>
+        </div>
+        <div class="top-metric-chip" title="Zero cloud leakage • 100% Offline">
+          <span class="top-metric-label">Privacy:</span>
+          <span class="top-metric-val val-purple">100% Local</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace (Inbox vs Vault) -->
+    <main class="workspace-grid">
+      
+      <!-- Left Panel: Messy Inbox -->
+      <section class="panel" id="panelInbox">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📥</span>
+            <span>Messy Inbox</span>
+            <span class="badge-count" id="inboxBadge">0 files</span>
+          </div>
+          <span class="folder-path-tag" id="inboxPathDisplay">./messy_inbox</span>
+        </div>
+
+        <!-- Compact Drag & Drop Upload Strip -->
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" multiple style="display: none;">
+          <span class="dropzone-icon">📥</span>
+          <span class="dropzone-text"><strong>Drop files here</strong> or browse</span>
+        </div>
+
+        <!-- File List with AI Pre-Scan Insights -->
+        <div class="file-list" id="inboxFileList">
+          <div class="empty-state">
+            <div class="empty-state-icon">📁</div>
+            <p>Inbox is sparkling clean! All files organized.</p>
+            <button class="btn btn-secondary btn-sm" onclick="document.getElementById('btnSeed').click()">Seed 4 Test Files</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Organized Vault -->
+      <section class="panel" id="panelVault">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🗂️</span>
+            <span>Organized Vault</span>
+            <span class="badge-count" id="vaultBadge">0 files</span>
+          </div>
+          <span class="folder-path-tag" id="vaultPathDisplay">./organized_vault</span>
+        </div>
+
+        <!-- Search & Category Filters -->
+        <div class="vault-filters">
+          <!-- Vault Storage & Insights Strip -->
+          <div class="vault-summary-strip" id="vaultSummaryStrip">
+            <div class="vault-summary-top">
+              <div class="vault-summary-left">
+                <span class="vault-stat-pill" id="vaultTotalSize">0 B Total</span>
+                <span class="vault-stat-pill" id="vaultCleanliness">100% Automated</span>
+                <span class="vault-stat-pill" id="vaultCategoryCount">0 Categories Active</span>
+              </div>
+              <div class="vault-toolbar-actions">
+                <select id="vaultSortSelect" class="styled-select-sm" title="Sort files">
+                  <option value="newest">📅 Newest</option>
+                  <option value="oldest">📅 Oldest</option>
+                  <option value="name_asc">🔤 Name (A-Z)</option>
+                  <option value="name_desc">🔤 Name (Z-A)</option>
+                  <option value="size_desc">💾 Largest</option>
+                </select>
+                <div class="view-mode-toggle" title="Switch layout">
+                  <button class="view-btn active" id="btnViewGroup" title="Grouped by Category">🗂️</button>
+                  <button class="view-btn" id="btnViewList" title="Compact List">📄</button>
+                  <button class="view-btn" id="btnViewGrid" title="Visual Cards Grid">🖼️</button>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btnSelectAll" title="Select / Deselect all sorted files">
+                  <span id="selectAllLabel">Select All</span>
+                </button>
+                <a href="/api/vault/export" class="btn btn-secondary btn-sm" id="btnExportManifest" title="Download audit manifest log as JSONL" download>
+                  <span>⬇️ Export</span>
+                </a>
+              </div>
+            </div>
+            <div class="vault-distribution-bar" id="vaultDistributionBar" title="Category distribution by file count"></div>
+          </div>
+
+          <!-- Search Box -->
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Filter sorted files by name, tag, or summary...">
+          </div>
+
+          <!-- Comprehensive Category Filter Pills -->
+          <div class="category-pills" id="categoryFilterBar">
+            <button class="cat-pill active" data-cat="all">All</button>
+            <button class="cat-pill" data-cat="Invoices & Receipts">🧾 Invoices</button>
+            <button class="cat-pill" data-cat="Banking & Taxes">💰 Taxes & Banking</button>
+            <button class="cat-pill" data-cat="Spreadsheets & Data">📊 Spreadsheets</button>
+            <button class="cat-pill" data-cat="Legal & Contracts">⚖️ Legal</button>
+            <button class="cat-pill" data-cat="Research & Academic">🎓 Research</button>
+            <button class="cat-pill" data-cat="Code & Development">💻 Code</button>
+            <button class="cat-pill" data-cat="Notes & Ideas">📝 Notes</button>
+            <button class="cat-pill" data-cat="Personal & Health">🩺 Health</button>
+            <button class="cat-pill" data-cat="Media & Images">🎨 Media</button>
+            <button class="cat-pill" data-cat="Presentations & Slides">📽️ Presentations</button>
+            <button class="cat-pill" data-cat="E-Books & Manuals">📚 E-Books</button>
+            <button class="cat-pill" data-cat="Travel & Bookings">✈️ Travel</button>
+            <button class="cat-pill" data-cat="Resumes & Credentials">📜 Resumes</button>
+            <button class="cat-pill" data-cat="Configs & System Logs">⚙️ Configs</button>
+            <button class="cat-pill" data-cat="Archives & Installers">📦 Archives</button>
+            <button class="cat-pill" data-cat="Audio & Podcasts">🎵 Audio</button>
+            <button class="cat-pill" data-cat="Work & Documents">📁 Work</button>
+            <button class="cat-pill btn-add-cat-pill" id="btnOpenAddCategory" title="Add a custom category folder">➕ New Category</button>
+          </div>
+
+          <!-- Batch Action Floating / Sticky Bar -->
+          <div class="batch-action-bar" id="batchActionBar" style="display: none;">
+            <div class="batch-bar-left">
+              <span class="batch-count-badge" id="batchCountBadge">0 selected</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);" id="batchSizeBadge">0 B</span>
+            </div>
+            <div class="batch-bar-actions">
+              <button class="btn btn-secondary btn-sm" id="btnBatchMove" title="Move selected files to another category">🔄 Move to...</button>
+              <button class="btn btn-secondary btn-sm" id="btnBatchZip" title="Download selected files as ZIP archive">⬇️ Download ZIP</button>
+              <button class="btn btn-danger btn-sm" id="btnBatchDelete" title="Delete selected files">🗑️ Delete</button>
+              <button class="btn btn-secondary btn-sm" id="btnBatchClear" title="Deselect all">✕ Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorized Vault List with AI Reasoning -->
+        <div class="file-list" id="vaultCategoryList">
+          <div class="empty-state">
+            <div class="empty-state-icon">📦</div>
+            <p>Vault is empty. Click "Sort Now" or "Preview" to organize your files.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Terminal Console Drawer (Collapsible Mini Status Dock) -->
+    <aside class="console-drawer" id="consoleDrawer">
+      <div class="console-header" id="consoleToggleHeader" title="Click to expand/collapse full engine audit logs">
+        <div class="console-title">
+          <span class="console-icon">📟</span>
+          <span>Engine Stream</span>
+          <span class="console-latest-ticker" id="consoleLatestTicker">[System] SlothSort local web interface ready</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <span class="badge-count" id="auditCountBadge">0 audit entries</span>
+          <button class="btn btn-secondary btn-xs" id="btnClearLogs" title="Clear log history">Clear</button>
+          <button class="console-toggle-btn" id="btnToggleConsole" title="Toggle Console Log Panel">▲</button>
+        </div>
+      </div>
+      <div class="console-logs" id="consoleLogs">
+        <div class="log-line log-dim">[System] SlothSort local web interface initialized.</div>
+        <div class="log-line log-cyan">[Engine] Checking local AI backend...</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Enhanced Preview Modal Dialog -->
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal-dialog" style="max-width: 760px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+          <span style="font-size: 1.2rem;">👁️</span>
+          <div class="modal-title" id="modalFilename" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">File Content Preview</div>
+        </div>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalContent">
+        Loading preview...
+      </div>
+      <div class="modal-footer" id="modalFooter" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-top: 1px solid var(--border-subtle); background: rgba(10, 15, 30, 0.4);">
+        <div style="font-size: 0.76rem; color: var(--text-muted);" id="modalFileMeta">0 B</div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" id="btnModalCopy">📋 Copy Path</button>
+          <a class="btn btn-secondary btn-sm" id="btnModalDownload" download>⬇️ Download</a>
+          <button class="btn btn-secondary btn-sm" id="btnModalMove">🔄 Move</button>
+          <button class="btn btn-secondary btn-sm" id="btnModalRename">✏️ Rename</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Folder Modal Dialog -->
+  <div class="modal-backdrop" id="customFolderModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">📂 Choose Any Target Folder on Your PC</div>
+        <button class="modal-close" id="customFolderCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body custom-folder-body">
+        <p style="color: var(--text-secondary); margin-bottom: 14px; font-size: 0.84rem; line-height: 1.5;">
+          Select any folder on your computer to tidy. SlothSort will read messy files inside it and organize them into categorized vaults safely.
+        </p>
+
+        <!-- Quick Shortcuts -->
+        <div class="shortcut-pills" style="margin-bottom: 16px;">
+          <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Quick Presets:</span>
+          <button type="button" class="btn btn-secondary btn-sm shortcut-btn" id="shortcutDesktop">Desktop</button>
+          <button type="button" class="btn btn-secondary btn-sm shortcut-btn" id="shortcutDocuments">Documents</button>
+          <button type="button" class="btn btn-secondary btn-sm shortcut-btn" id="shortcutDownloads">Downloads</button>
+        </div>
+
+        <form id="customFolderForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.76rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Folder to Tidy (Inbox Path)</label>
+            <input type="text" id="customInboxInput" class="styled-text-input" placeholder="e.g. D:\MessyFolder or ~/Desktop or C:\Users\YourName\Documents" required>
+            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Enter any path on your PC. It will be scanned locally without uploading.</span>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.76rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Destination Vault (Optional)</label>
+            <input type="text" id="customVaultInput" class="styled-text-input" placeholder="Leave empty to use <TargetFolder>\SlothVault">
+            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Where sorted category folders will be created.</span>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelCustomFolder">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveCustomFolder">Set Target & Load Files</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Move Category Modal Dialog -->
+  <div class="modal-backdrop" id="moveCategoryModal">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">🔄 Move to Another Category</div>
+        <button class="modal-close" id="moveCategoryCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <p style="color: var(--text-secondary); margin-bottom: 14px; font-size: 0.84rem;">
+          Select a new destination category for <strong id="moveFileName" style="color: #34d399; font-family: var(--font-mono);">filename</strong>:
+        </p>
+        <form id="moveCategoryForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <input type="hidden" id="moveFilePath">
+          <div>
+            <label style="display: block; font-size: 0.74rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Target Category</label>
+            <select id="moveTargetCategorySelect" class="styled-text-input" style="font-family: var(--font-sans); cursor: pointer;"></select>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelMoveCategory">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnConfirmMoveCategory">Move File Now</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rename File Modal Dialog -->
+  <div class="modal-backdrop" id="renameFileModal">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">✏️ Rename Sorted File</div>
+        <button class="modal-close" id="renameFileCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <form id="renameFileForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <input type="hidden" id="renameFilePath">
+          <div>
+            <label style="display: block; font-size: 0.74rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">New File Name</label>
+            <input type="text" id="renameFileInput" class="styled-text-input" required>
+            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Updates filename and maintains the reversibility audit trail.</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelRename">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnConfirmRename">Save New Name</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Custom Category Modal Dialog -->
+  <div class="modal-backdrop" id="addCategoryModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title">➕ Add Custom Category Folder</div>
+        <button class="modal-close" id="addCategoryCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <form id="addCategoryForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.74rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Category Name</label>
+            <input type="text" id="addCategoryInput" class="styled-text-input" placeholder="e.g. Design Assets, Client Deliverables, Taxes 2026" required>
+            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Creates a new subfolder in your Organized Vault.</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelAddCategory">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnConfirmAddCategory">Create Category</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch Move Modal Dialog -->
+  <div class="modal-backdrop" id="batchMoveModal">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">📦 Batch Move Selected Files</div>
+        <button class="modal-close" id="batchMoveCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <p style="color: var(--text-secondary); margin-bottom: 14px; font-size: 0.84rem;">
+          Move <strong id="batchMoveCountText" style="color: #34d399;">0 files</strong> to:
+        </p>
+        <form id="batchMoveForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.74rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Destination Category</label>
+            <select id="batchMoveTargetCategorySelect" class="styled-text-input" style="font-family: var(--font-sans); cursor: pointer;"></select>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelBatchMove">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnConfirmBatchMove">Move Files Now</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Client Application Script -->
+  <script src="/static/app.js?v=folder2"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+FORM W-2 WAGE AND TAX STATEMENT 2025
+Employer: Distributed AI Corp
+Employee SSN: ***-**-4910
+Box 1 Wages & Tips: $118,500.00
+Box 2 Federal Income Tax Withheld: $19,240.00
+IRS Filing Copy B for State & Federal Declaration

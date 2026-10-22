@@ -1,0 +1,4 @@
+SLIDE 1: SlothSort - The Lazy Genius File Agent
+SLIDE 2: Problem: 4.8 billion files rot in user Downloads folders
+SLIDE 3: Solution: On-device SLM categorization with zero cloud egress
+SLIDE 4: Traction: 100% user satisfaction for International Sloth Day

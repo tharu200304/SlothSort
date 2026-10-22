@@ -1,0 +1,5 @@
+OFFLINE LLM DEPLOYMENT HANDBOOK & USER GUIDE
+Chapter 1: Quantization (GGUF & AWQ)
+Chapter 2: Context Window Management & KV-Cache Offloading
+Chapter 3: Local REST Daemon Orchestration
+This user guide outlines step-by-step production setup on local machines.
