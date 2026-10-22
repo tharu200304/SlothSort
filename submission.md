@@ -6,6 +6,30 @@
   <img src="https://raw.githubusercontent.com/tharu200304/SlothSort/main/assets/slothsort_cover.jpg" alt="SlothSort Project Cover" width="100%">
 </p>
 
+---
+
+## 📑 Table of Contents
+
+- [🦥 What I Built](#what-i-built)
+  - [What It Does](#what-it-does)
+- [🎥 Demo](#demo)
+  - [Visual Dashboard Highlights](#visual-dashboard-highlights)
+- [💻 Code](#code)
+- [🛠️ How I Built It](#how-i-built-it)
+  - [1. Local Open-Weight Inference (Ollama)](#1-local-open-weight-inference-ollama)
+  - [2. Dual-Engine Architecture with Heuristic Fallback](#2-dual-engine-architecture-with-heuristic-fallback)
+  - [3. Backend (FastAPI & Python 3.9+)](#3-backend-fastapi--python-39)
+  - [4. Viewport-Constrained Frontend (Vanilla HTML/CSS/JS)](#4-viewport-constrained-frontend-vanilla-htmlcssjs)
+- [🌐 Why Does Open Innovation Matter?](#why-does-open-innovation-matter)
+  - [1. The Ultimate Privacy Barrier](#1-the-ultimate-privacy-barrier)
+  - [2. Zero Marginal Cost for Background Daemons](#2-zero-marginal-cost-for-background-daemons)
+  - [3. Air-Gapped Autonomy](#3-air-gapped-autonomy)
+  - [4. Full Auditability and Trust](#4-full-auditability-and-trust)
+- [🤖 My Agent Session](#my-agent-session)
+- [⚡ The Lazy Payoff](#the-lazy-payoff)
+
+---
+
 ## What I Built
 <!-- What does it do, and what effort does it save? Who gets to be a little lazier because of it? -->
 
