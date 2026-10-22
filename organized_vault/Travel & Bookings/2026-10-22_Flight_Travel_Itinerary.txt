@@ -1,0 +1,5 @@
+DELTA AIRLINES PASSENGER ITINERARY & FLIGHT CONFIRMATION
+Booking Reference Locator: #7Z9KQ2
+Passenger: Developer / Hacker
+Flight DL412: SFO -> JFK (Departs 08:30 AM, Terminal 2)
+Hotel Reservation: The HighLine Hotel, Check-in: Oct 24, 2026

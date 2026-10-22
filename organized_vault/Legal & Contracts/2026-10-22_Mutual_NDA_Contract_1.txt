@@ -1,0 +1,5 @@
+MUTUAL NON-DISCLOSURE AGREEMENT (NDA)
+This Agreement is entered into by and between Party A and Party B.
+1. Confidential Information: Both parties agree to protect proprietary secrets.
+2. Non-Circumvention: Neither party shall bypass terms for a period of 3 years.
+IN WITNESS WHEREOF, the authorized signatories execute this agreement.

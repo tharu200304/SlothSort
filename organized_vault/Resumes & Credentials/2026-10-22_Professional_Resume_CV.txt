@@ -1,0 +1,5 @@
+CURRICULUM VITAE - LEAD AI SYSTEMS ARCHITECT
+Education: M.S. Computer Science
+Core Skills: PyTorch, Local SLMs, On-Device Inference, Rust, FastAPI
+Experience: 8+ years designing autonomous agents and high-throughput pipelines
+Certifications: Certified Deep Learning Systems Specialist
