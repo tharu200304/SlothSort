@@ -132,6 +132,19 @@ Because the code, the model weights, and the audit manifest (`slothsort_manifest
 
 ---
 
+## My Agent Session
+<!-- Optional, but judges love it. Save your session with DevRelay and embed it with the agent_session tag (see the challenge page), or link to it. -->
+
+The entire development process of SlothSort—from initial architecture brainstorming, designing the dual-engine heuristic and local LLM pipelines, creating the FastAPI + Vanilla JS glassmorphic dashboard, to setting up reversible undo manifests and releases—was developed interactively with the AI agent.
+
+You can inspect the full, interactive transcript of this development session directly on DEV:
+
+{% agent_session 1104 %}
+
+*(Direct session link: [Building SlothSort: Autonomous Local AI File Tidier](https://dev.to/agent_sessions/building-slothsort-autonomous-local-ai-file-tidier-ssnzvg))*
+
+---
+
 ## The Lazy Payoff
 <!-- Optional, but this is where you can make your post stand out.  How much time or effort does it actually save?  Did you (or someone else) use it this week?  If not, remove this section. -->
 
