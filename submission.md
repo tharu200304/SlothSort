@@ -1,11 +1,4 @@
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)*
-
-# SlothSort 🦥: Autonomous Local AI File & Clutter Tidier
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/tharu200304/SlothSort/main/assets/slothsort_cover.jpg" alt="SlothSort Project Cover" width="100%">
-</p>
-
 ### 📖 System Overview
 
 > **SlothSort** is an autonomous, privacy-first desktop file tidier engineered for the **Hacktoberfest "Slow and Steady" AI Challenge**. It channels the true spirit of the sloth—conserving human energy and automating the chores we dread—by turning chaotic `Downloads` and `Desktop` folders into clean, organized vaults without lifting a finger.
