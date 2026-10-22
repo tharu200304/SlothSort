@@ -1,6 +1,10 @@
 # SlothSort
 
 <p align="center">
+  <img src="assets/slothsort_cover.jpg" alt="SlothSort AI Cover Banner" width="100%">
+</p>
+
+<p align="center">
   <strong>Autonomous Local AI File & Clutter Tidier powered by Open-Weight Models.</strong><br>
   <em>100% Offline • Zero Cloud Egress • Zero Marginal Token Fees • Complete Reversibility</em>
 </p>
@@ -346,6 +350,8 @@ slothsort/
 ├── requirements.txt           # Minimal Python dependencies
 ├── LICENSE                    # MIT License
 ├── README.md                  # Comprehensive documentation
+├── assets/                    # Project cover banner & media assets
+│   └── slothsort_cover.jpg
 ├── messy_inbox/               # Default input folder for messy clutter
 │   └── .gitkeep
 ├── organized_vault/           # Default output directory with categorized subvaults
